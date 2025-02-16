@@ -1,6 +1,7 @@
 //jestjs.io
 
 const { Builder, Browser, By } = require("selenium-webdriver");
+const chrome= require('selenium-webdriver/chrome')
 const faker = require('faker');
 
 describe('Selenium', () => {
@@ -15,7 +16,10 @@ describe('Selenium', () => {
     // })
 
     beforeAll(async () => {
-        driver = await new Builder().forBrowser(Browser.CHROME).build();
+        driver = await new Builder()
+        .forBrowser('chrome')
+        .setChromeOptions(new chrome.Options().addArguments('--headless'))
+        .build();
     });
 
     afterAll(async () => {
@@ -36,7 +40,7 @@ describe('Selenium', () => {
             expect(inputBox).toBeTruthy();
         });
 
-        test.only('shows password input box', async () => {
+        it('shows password input box', async () => {
             let inputBox = await driver.findElement(By.name('my-password'));
             expect(inputBox).toBeTruthy();
         });
